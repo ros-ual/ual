@@ -16,14 +16,14 @@
 //  OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //---------------------------------------------------------------------------------------------------------------------
-// Complete and independent version available in https://github.com/Bardo91/ros_uav_abstraction_layer
+// Complete and independent version available in https://github.com/Bardo91/ros_ual_core
 //---------------------------------------------------------------------------------------------------------------------
-#ifndef UAV_ABSTRACTION_LAYER_PID_H
-#define UAV_ABSTRACTION_LAYER_PID_H
+#ifndef UAL_PID_H
+#define UAL_PID_H
 
 #include <limits>
 #include <ros/ros.h>
-#include <uav_abstraction_layer/Float32Param.h>
+#include <ual_core/Float32Param.h>
 #include <std_msgs/Float32.h>
 #include <std_srvs/Trigger.h>
 #include <thread>
@@ -32,7 +32,7 @@
 #include <yaml-cpp/yaml.h>
 #include <fstream>
 
-namespace grvc { namespace ual {
+namespace ual {
 
 struct PIDParams {
     float kp;
@@ -221,11 +221,11 @@ public:
     }
  
 private:
-    bool serviceKp      (uav_abstraction_layer::Float32Param::Request &_req, uav_abstraction_layer::Float32Param::Response &_res)  {kp_ = _req.param; return true;};
-    bool serviceKi      (uav_abstraction_layer::Float32Param::Request &_req, uav_abstraction_layer::Float32Param::Response &_res)  {ki_ = _req.param; return true;};
-    bool serviceKd      (uav_abstraction_layer::Float32Param::Request &_req, uav_abstraction_layer::Float32Param::Response &_res)  {kd_ = _req.param; return true;};
-    bool serviceKsat    (uav_abstraction_layer::Float32Param::Request &_req, uav_abstraction_layer::Float32Param::Response &_res)  {min_sat_ = -_req.param; max_sat_ = _req.param; return true;};
-    bool serviceKwindup (uav_abstraction_layer::Float32Param::Request &_req, uav_abstraction_layer::Float32Param::Response &_res)  {min_windup_ = -_req.param; max_windup_ = _req.param; return true;};
+    bool serviceKp      (ual_core::Float32Param::Request &_req, ual_core::Float32Param::Response &_res)  {kp_ = _req.param; return true;};
+    bool serviceKi      (ual_core::Float32Param::Request &_req, ual_core::Float32Param::Response &_res)  {ki_ = _req.param; return true;};
+    bool serviceKd      (ual_core::Float32Param::Request &_req, ual_core::Float32Param::Response &_res)  {kd_ = _req.param; return true;};
+    bool serviceKsat    (ual_core::Float32Param::Request &_req, ual_core::Float32Param::Response &_res)  {min_sat_ = -_req.param; max_sat_ = _req.param; return true;};
+    bool serviceKwindup (ual_core::Float32Param::Request &_req, ual_core::Float32Param::Response &_res)  {min_windup_ = -_req.param; max_windup_ = _req.param; return true;};
 
     bool saveParams (std_srvs::Trigger::Request &_req, std_srvs::Trigger::Response &_res) {
         YAML::Node parent_node;
@@ -257,6 +257,6 @@ private:
     bool is_ros_enabled_ = false;
 };
 
-}} // namespace grvc::ual
+} // namespace ual
 
-#endif // UAV_ABSTRACTION_LAYER_PID_H
+#endif // UAL_PID_H

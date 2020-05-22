@@ -4,13 +4,13 @@ import sys
 import yaml
 import rospy
 import rospkg
-from uav_abstraction_layer.srv import TakeOff, GoToWaypoint, Land
+from ual_core.srv import TakeOff, GoToWaypoint, Land
 from geometry_msgs.msg import PoseStamped
 
 def track_waypoints():
     # Parse arguments
     parser = argparse.ArgumentParser(description='Track waypoints defined in a yaml file')
-    parser.add_argument('-plan_package', type=str, default='uav_abstraction_layer',
+    parser.add_argument('-plan_package', type=str, default='ual_core',
                         help='Name of the package where plan to track is stored')
     parser.add_argument('-plan_file', type=str, default='wp_default.yaml',
                         help='Name of the file inside plan_package/plans')

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import rospy
-from uav_abstraction_layer.msg import State
+from ual_core.msg import State
 
 prev_state = State()
 prev_state.state = -1
@@ -29,7 +29,7 @@ def state_callback(state):
 
 def main():
 	# This node must be called inside ual namespace:
-	#   - from console, e.g: rosrun uav_abstraction_layer state_monitor.py __ns:=uav_1 
+	#   - from console, e.g: rosrun ual_core state_monitor.py __ns:=uav_1 
 	# 	- from a launch, e.g: node with ns="uav_1"
     rospy.init_node('state_monitor', anonymous=True)
 

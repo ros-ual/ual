@@ -6,8 +6,8 @@ import rospkg
 import math
 from joy_handle import JoyHandle, ButtonState
 from sensor_msgs.msg import Joy
-from uav_abstraction_layer.srv import TakeOff, Land, SetVelocity
-from uav_abstraction_layer.msg import State
+from ual_core.srv import TakeOff, Land, SetVelocity
+from ual_core.msg import State
 from geometry_msgs.msg import TwistStamped
 from geometry_msgs.msg import PoseStamped
 

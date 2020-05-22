@@ -7,7 +7,7 @@ from mavros_msgs.msg import State as MavrosState
 from mavros_msgs.srv import CommandBool
 from mavros_msgs.msg import OverrideRCIn
 from sensor_msgs.msg import Joy
-from uav_abstraction_layer.msg import State as UalState
+from ual_core.msg import State as UalState
 from std_srvs.srv import Empty
 from joy_handle import JoyHandle
 

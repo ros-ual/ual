@@ -14,7 +14,7 @@ def pose_callback(data):
 def save_waypoints():
     # Parse arguments
     parser = argparse.ArgumentParser(description='Save waypoints to a yaml file')
-    parser.add_argument('-plan_package', type=str, default='uav_abstraction_layer',
+    parser.add_argument('-plan_package', type=str, default='ual_core',
                         help='Name of the package where generated plan will be stored')
     args, unknown = parser.parse_known_args()
     # utils.check_unknown_args(unknown)

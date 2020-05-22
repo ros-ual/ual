@@ -18,16 +18,16 @@
 // OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //----------------------------------------------------------------------------------------------------------------------
-#include <uav_abstraction_layer/ual.h>
-#include <uav_abstraction_layer/GoToWaypointGeo.h>
-#include <uav_abstraction_layer/SetHome.h>
+#include <ual_core/ual.h>
+#include <ual_core/GoToWaypointGeo.h>
+#include <ual_core/SetHome.h>
 #include <ros/ros.h>
 #include <tf2_ros/transform_broadcaster.h>
 #include <std_srvs/Empty.h>
 
-using namespace uav_abstraction_layer;
+using namespace ual_core;
 
-namespace grvc { namespace ual {
+namespace ual {
 
 UAL::UAL(Backend* _backend) {
     // Error if ROS is not initialized
@@ -144,7 +144,7 @@ UAL::UAL(Backend* _backend) {
             ros::Publisher pose_pub = nh.advertise<geometry_msgs::PoseStamped>(pose_topic, 10);
             ros::Publisher velocity_pub = nh.advertise<geometry_msgs::TwistStamped>(velocity_topic, 10);
             ros::Publisher odometry_pub = nh.advertise<nav_msgs::Odometry>(odometry_topic, 10);
-            ros::Publisher state_pub = nh.advertise<uav_abstraction_layer::State>(state_topic, 10);
+            ros::Publisher state_pub = nh.advertise<ual_core::State>(state_topic, 10);
             ros::Publisher ref_pose_pub = nh.advertise<geometry_msgs::PoseStamped>(ref_pose_topic, 10);
             static tf2_ros::TransformBroadcaster tf_pub;
 
@@ -187,7 +187,7 @@ UAL::~UAL() {
 
 bool UAL::setPose(const geometry_msgs::PoseStamped& _pose) {
     // Check required state
-    if (backend_->state() != uav_abstraction_layer::State::FLYING_AUTO) {
+    if (backend_->state() != ual_core::State::FLYING_AUTO) {
         ROS_ERROR("Unable to setPose: not FLYING_AUTO!");
         return false;
     }
@@ -209,7 +209,7 @@ bool UAL::setPose(const geometry_msgs::PoseStamped& _pose) {
 }
 bool UAL::goToWaypoint(const Waypoint& _wp, bool _blocking) {
     // Check required state
-    if (backend_->state() != uav_abstraction_layer::State::FLYING_AUTO) {
+    if (backend_->state() != ual_core::State::FLYING_AUTO) {
         ROS_ERROR("Unable to goToWaypoint: not FLYING_AUTO!");
         return false;
     }
@@ -244,7 +244,7 @@ bool UAL::goToWaypoint(const Waypoint& _wp, bool _blocking) {
 }
 bool UAL::goToWaypointGeo(const WaypointGeo& _wp, bool _blocking) {
     // Check required state
-    if (backend_->state() != uav_abstraction_layer::State::FLYING_AUTO) {
+    if (backend_->state() != ual_core::State::FLYING_AUTO) {
         ROS_ERROR("Unable to goToWaypointGeo: not FLYING_AUTO!");
         return false;
     }
@@ -276,7 +276,7 @@ bool UAL::goToWaypointGeo(const WaypointGeo& _wp, bool _blocking) {
 
 bool UAL::takeOff(double _height, bool _blocking) {
     // Check required state
-    if (backend_->state() != uav_abstraction_layer::State::LANDED_ARMED) {
+    if (backend_->state() != ual_core::State::LANDED_ARMED) {
         ROS_ERROR("Unable to takeOff: not LANDED_ARMED!");
         std::cout << backend_->state() << std::endl;
         return false;
@@ -306,7 +306,7 @@ bool UAL::takeOff(double _height, bool _blocking) {
 
 bool UAL::land(bool _blocking) {
     // Check required state
-    if (backend_->state() != uav_abstraction_layer::State::FLYING_AUTO) {
+    if (backend_->state() != ual_core::State::FLYING_AUTO) {
         ROS_ERROR("Unable to land: not FLYING_AUTO!");
         return false;
     }
@@ -332,7 +332,7 @@ bool UAL::land(bool _blocking) {
 
 bool UAL::setVelocity(const Velocity& _vel) {
     // Check required state
-    if (backend_->state() != uav_abstraction_layer::State::FLYING_AUTO) {
+    if (backend_->state() != ual_core::State::FLYING_AUTO) {
         ROS_ERROR("Unable to setVelocity: not FLYING_AUTO!");
         return false;
     }
@@ -352,7 +352,7 @@ bool UAL::setVelocity(const Velocity& _vel) {
 
 bool UAL::recoverFromManual() {
     // Check required state
-    if (backend_->state() != uav_abstraction_layer::State::FLYING_MANUAL) {
+    if (backend_->state() != ual_core::State::FLYING_MANUAL) {
         ROS_ERROR("Unable to recoverFromManual: not FLYING_MANUAL!");
         return false;
     }
@@ -366,7 +366,7 @@ bool UAL::recoverFromManual() {
 
 bool UAL::setHome(bool set_z) {
     // Check required state
-    if ((backend_->state() != uav_abstraction_layer::State::LANDED_DISARMED) && (backend_->state() != uav_abstraction_layer::State::LANDED_ARMED)) {
+    if ((backend_->state() != ual_core::State::LANDED_DISARMED) && (backend_->state() != ual_core::State::LANDED_ARMED)) {
         ROS_ERROR("Unable to setHome: not LANDED_*!");
         return false;
     }
@@ -394,4 +394,4 @@ inline void UAL::validateOrientation(geometry_msgs::Quaternion& _q) {
     // ROS_INFO("q = [%lf, %lf, %lf, %lf]", _q.x, _q.y, _q.z, _q.w);  // Debug!
 }
 
-}}	// namespace grvc::ual
+}	// namespace ual

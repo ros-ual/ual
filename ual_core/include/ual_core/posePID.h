@@ -18,14 +18,14 @@
 // OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //----------------------------------------------------------------------------------------------------------------------
-#ifndef UAV_ABSTRACTION_LAYER_POSEPID_H
-#define UAV_ABSTRACTION_LAYER_POSEPID_H
+#ifndef UAL_POSEPID_H
+#define UAL_POSEPID_H
 
-#include <uav_abstraction_layer/PID.h>
+#include <ual_core/PID.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <geometry_msgs/TwistStamped.h>
 
-namespace grvc { namespace ual {
+namespace ual {
 
 class PosePID {
 public:
@@ -145,6 +145,6 @@ private:
     geometry_msgs::PoseStamped last_pose_, last_pose_err_;
 };
 
-}}
+}
 
-#endif // UAV_ABSTRACTION_LAYER_POSEPID_H
+#endif // UAL_POSEPID_H

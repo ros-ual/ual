@@ -18,8 +18,8 @@
 // OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //----------------------------------------------------------------------------------------------------------------------
-#ifndef UAV_ABSTRACTION_LAYER_BACKEND_H
-#define UAV_ABSTRACTION_LAYER_BACKEND_H
+#ifndef UAL_CORE_BACKEND_H
+#define UAL_CORE_BACKEND_H
 
 #include <thread>
 #include <atomic>
@@ -31,9 +31,9 @@
 #include <geometry_msgs/TransformStamped.h>
 #include <sensor_msgs/NavSatFix.h>
 #include <nav_msgs/Odometry.h>
-#include <uav_abstraction_layer/State.h>
+#include <ual_core/State.h>
 
-namespace grvc { namespace ual {
+namespace ual {
 
 typedef geometry_msgs::PoseStamped      Pose;
 typedef geometry_msgs::PoseStamped      Waypoint;
@@ -41,7 +41,7 @@ typedef sensor_msgs::NavSatFix          WaypointGeo;
 typedef geometry_msgs::TwistStamped     Velocity;
 typedef nav_msgs::Odometry              Odometry;
 typedef geometry_msgs::TransformStamped Transform;
-typedef uint8_t                         State;  
+typedef uint8_t                         State;
 
 /// Common interface for back-end implementations of ual
 class Backend {
@@ -130,9 +130,9 @@ protected:
     // Ros spinning thread
     std::thread spin_thread_;
 
-    std::atomic<State> state_ = {uav_abstraction_layer::State::UNINITIALIZED};
+    std::atomic<State> state_ = {ual_core::State::UNINITIALIZED};
 };
 
-}}	// namespace grvc::ual
+}	// namespace ual
 
-#endif // UAV_ABSTRACTION_LAYER_BACKEND_H
+#endif // UAL_CORE_BACKEND_H

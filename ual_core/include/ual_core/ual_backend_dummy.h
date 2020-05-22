@@ -18,14 +18,14 @@
 // OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //----------------------------------------------------------------------------------------------------------------------
-#ifndef UAV_ABSTRACTION_LAYER_BACKEND_DUMMY_H
-#define UAV_ABSTRACTION_LAYER_BACKEND_DUMMY_H
+#ifndef UAL_CORE_BACKEND_DUMMY_H
+#define UAL_CORE_LAYER_BACKEND_DUMMY_H
 
-#include <uav_abstraction_layer/backend.h>
+#include <ual_core/backend.h>
 #include <ros/ros.h>
 
 
-namespace grvc { namespace ual {
+namespace ual {
 
 class BackendDummy : public Backend {
 
@@ -107,6 +107,6 @@ public:
     grvc::ual::Pose referencePose() override {}  // TODO: Move this info to State.msg?
 };
 
-}}	// namespace grvc::ual
+}	// namespace ual
 
-#endif // UAV_ABSTRACTION_LAYER_BACKEND_DUMMY_H
+#endif // UAL_CORE_BACKEND_DUMMY_H

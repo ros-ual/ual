@@ -18,17 +18,17 @@
 // OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //----------------------------------------------------------------------------------------------------------------------
-#ifndef UAV_ABSTRACTION_LAYER_UAL_H
-#define UAV_ABSTRACTION_LAYER_UAL_H
+#ifndef UAL_CORE_UAL_H
+#define UAL_CORE_UAL_H
 
-#include <uav_abstraction_layer/backend.h>
-#include <uav_abstraction_layer/GoToWaypoint.h>
-#include <uav_abstraction_layer/TakeOff.h>
-#include <uav_abstraction_layer/Land.h>
-#include <uav_abstraction_layer/State.h>
+#include <ual_core/backend.h>
+#include <ual_core/GoToWaypoint.h>
+#include <ual_core/TakeOff.h>
+#include <ual_core/Land.h>
+#include <ual_core/State.h>
 #include <thread>
 
-namespace grvc { namespace ual {
+namespace ual {
 
 /// UAL replicates Backend interface, with some extras
 class UAL {
@@ -59,8 +59,8 @@ public:
     Pose    referencePose() const { return backend_->referencePose(); }
 
     /// Current robot state
-    uav_abstraction_layer::State state() {
-        uav_abstraction_layer::State output;
+    ual_core::State state() {
+        ual_core::State output;
         output.state = backend_->state();
         return output;
     }
@@ -111,6 +111,6 @@ protected:
     void validateOrientation(geometry_msgs::Quaternion& _q);
 };
 
-}}	// namespace grvc::ual
+}	// namespace ual
 
-#endif  // UAV_ABSTRACTION_LAYER_UAL_H
+#endif  // UAL_CORE_UAL_H
