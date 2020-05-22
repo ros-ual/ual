@@ -1,0 +1,57 @@
+joy_layout:
+  a:
+    index: 0
+  b:
+    index: 1
+  x:
+    index: 3
+  y:
+    index: 4
+
+  left_shoulder:
+    index: 6
+
+  right_shoulder:
+    index: 7
+
+  left_trigger:
+    index: 8
+
+  right_trigger:
+    index: 9
+
+  select:
+    index: 10
+
+  start:
+    index: 11
+
+  left_thumb:
+    index: 13
+
+  right_thumb:
+    index: 14
+
+  left_analog_x:
+    index: 0
+    reversed: true
+
+  left_analog_y:
+    index: 1
+    reversed: false
+
+  right_analog_x:
+    index: 2
+    reversed: true
+
+  right_analog_y:
+    index: 3
+    reversed: false
+
+  dpad_x:
+    index: 6
+    reversed: true
+
+  dpad_y:
+    index: 7
+    reversed: false
