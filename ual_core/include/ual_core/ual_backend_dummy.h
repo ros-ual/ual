@@ -18,8 +18,8 @@
 // OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //----------------------------------------------------------------------------------------------------------------------
-#ifndef UAL_CORE_BACKEND_DUMMY_H
-#define UAL_CORE_LAYER_BACKEND_DUMMY_H
+#ifndef UAL_BACKEND_DUMMY_H
+#define UAL_BACKEND_DUMMY_H
 
 #include <ual_core/backend.h>
 #include <ros/ros.h>
@@ -32,6 +32,7 @@ class BackendDummy : public Backend {
 public:
     BackendDummy() : Backend() {
         ROS_WARN("BackendDummy is only for testing porposes");
+        state_ = ual_core::State::LANDED_ARMED;
     }
 
     /// Backend is initialized and ready to run tasks?
@@ -75,7 +76,7 @@ public:
     /// Go to the specified waypoint in geographic coordinates, following a straight line
     /// \param _wp goal waypoint in geographic coordinates
     void	goToWaypointGeo(const WaypointGeo& _wp) override {
-        ROS_INFO("BackendDummy::goToWaypointGeo: latitude = %f, longitude = %f, altitude = %f", _wp.latitude, _wp.longitude, _wp.altitude);
+        ROS_INFO("BackendDummy::goToWaypointGeo: latitude = %f, longitude = %f, altitude = %f", _wp.position.latitude, _wp.position.longitude, _wp.position.altitude);
     }
 
     /// Follow a list of waypoints, one after another
@@ -83,11 +84,17 @@ public:
     /// Perform a take off maneuver
     /// \param _height target height that must be reached to consider the take off complete
     void    takeOff(double _height) override {
+        state_ = ual_core::State::TAKING_OFF;
         ROS_INFO("BackendDummy::takeOff: height = %f", _height);
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        state_ = ual_core::State::FLYING_AUTO;
     }
     /// Land on the current position.
     void	land() override {
+        state_ = ual_core::State::LANDING;
         ROS_INFO("BackendDummy::land");
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        state_ = ual_core::State::LANDED_ARMED;
     }
     /// Set velocities
     /// \param _vel target velocity in world coordinates
@@ -104,9 +111,9 @@ public:
         ROS_INFO("BackendDummy::setHome: set_z = %s", set_z ? "true" : "false");
     }
 
-    grvc::ual::Pose referencePose() override {}  // TODO: Move this info to State.msg?
+    ual::Pose referencePose() override {}  // TODO: Move this info to State.msg?
 };
 
 }	// namespace ual
 
-#endif // UAL_CORE_BACKEND_DUMMY_H
+#endif // UAL_BACKEND_DUMMY_H
