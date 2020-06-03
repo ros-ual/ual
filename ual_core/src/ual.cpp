@@ -89,6 +89,7 @@ UAL::UAL(Backend* _backend) {
             std::string pose_topic = ual_ns + "/pose";
             std::string velocity_topic = ual_ns + "/velocity";
             std::string odometry_topic = ual_ns + "/odom";
+            std::string global_pose_topic = ual_ns + "/global_pose";
             std::string state_topic = ual_ns + "/state";
             std::string ref_pose_topic = ual_ns + "/ref_pose";
 
@@ -144,6 +145,7 @@ UAL::UAL(Backend* _backend) {
             ros::Publisher pose_pub = nh.advertise<geometry_msgs::PoseStamped>(pose_topic, 10);
             ros::Publisher velocity_pub = nh.advertise<geometry_msgs::TwistStamped>(velocity_topic, 10);
             ros::Publisher odometry_pub = nh.advertise<nav_msgs::Odometry>(odometry_topic, 10);
+            ros::Publisher global_pose_pub = nh.advertise<geographic_msgs::GeoPoseStamped>(global_pose_topic, 10);
             ros::Publisher state_pub = nh.advertise<ual_core::State>(state_topic, 10);
             ros::Publisher ref_pose_pub = nh.advertise<geometry_msgs::PoseStamped>(ref_pose_topic, 10);
             static tf2_ros::TransformBroadcaster tf_pub;
@@ -156,6 +158,7 @@ UAL::UAL(Backend* _backend) {
                 pose_pub.publish(this->pose());
                 velocity_pub.publish(this->velocity());
                 odometry_pub.publish(this->odometry());
+                global_pose_pub.publish(this->globalPose());
                 state_pub.publish(this->state());
                 tf_pub.sendTransform(this->transform());
                 ref_pose_pub.publish(this->referencePose()); //!TODO: publish only during position control?
@@ -252,7 +255,7 @@ bool UAL::goToWaypointGeo(const WaypointGeo& _wp, bool _blocking) {
     if (!backend_->isIdle()) { backend_->abort(false); }
 
     // Check consistency of geo pose data (isnan?)
-    if ( std::isnan(_wp.latitude) || std::isnan(_wp.longitude) || std::isnan(_wp.altitude) ) {
+    if ( std::isnan(_wp.position.latitude) || std::isnan(_wp.position.longitude) || std::isnan(_wp.position.altitude) ) {
         ROS_ERROR("Unable to goToWaypointGeo: NaN received");
         return false;
     }

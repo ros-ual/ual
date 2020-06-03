@@ -14,6 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   tf2_ros
   sensor_msgs
+  geographic_msgs
   geodesy
 )
 
@@ -73,7 +74,7 @@ add_service_files(
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
   DEPENDENCIES
-  geometry_msgs std_msgs sensor_msgs
+  geometry_msgs std_msgs sensor_msgs geographic_msgs
 )
 
 ################################################
@@ -108,7 +109,7 @@ generate_messages(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ual_core
-  CATKIN_DEPENDS message_runtime geometry_msgs roscpp std_msgs tf2_ros sensor_msgs geodesy
+  CATKIN_DEPENDS message_runtime geometry_msgs roscpp std_msgs tf2_ros sensor_msgs geographic_msgs geodesy
 #  DEPENDS system_lib
 )
 

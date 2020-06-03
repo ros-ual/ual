@@ -1,3 +1,3 @@
-sensor_msgs/NavSatFix waypoint
+geographic_msgs/GeoPose waypoint
 bool blocking
 ---

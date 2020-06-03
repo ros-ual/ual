@@ -29,15 +29,19 @@
 #include <geometry_msgs/TwistStamped.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <geometry_msgs/TransformStamped.h>
-#include <sensor_msgs/NavSatFix.h>
+#include <geometry_msgs/QuaternionStamped.h>
+#include <geographic_msgs/GeoPose.h>
+#include <geographic_msgs/GeoPoseStamped.h>
 #include <nav_msgs/Odometry.h>
 #include <ual_core/State.h>
+#include <ros/ros.h>
 
 namespace ual {
 
 typedef geometry_msgs::PoseStamped      Pose;
 typedef geometry_msgs::PoseStamped      Waypoint;
-typedef sensor_msgs::NavSatFix          WaypointGeo;
+typedef geographic_msgs::GeoPoseStamped PoseGeo;
+typedef geographic_msgs::GeoPose        WaypointGeo;
 typedef geometry_msgs::TwistStamped     Velocity;
 typedef nav_msgs::Odometry              Odometry;
 typedef geometry_msgs::TransformStamped Transform;
@@ -77,6 +81,8 @@ public:
     virtual Odometry odometry() const = 0;
     /// Latest transform estimation of the robot
     virtual Transform transform() const = 0;
+    /// Latest pose estimation of the robot in geodesic coordinates
+    virtual PoseGeo  globalPose() const { return PoseGeo(); }
     /// Current robot state
     inline State state() { return this->state_; }
     /// Current reference pose
@@ -92,7 +98,10 @@ public:
 
     /// Go to the specified waypoint in geographic coordinates, following a straight line
     /// \param _wp goal waypoint in geographic coordinates
-    virtual void	goToWaypointGeo(const WaypointGeo& _wp) = 0;
+    virtual void	goToWaypointGeo(const WaypointGeo& _wp)
+    {
+        ROS_ERROR("UAL: This backend is not supporting function goToWaypointGeo.");
+    }
 
     /// Perform a take off maneuver
     /// \param _height target height that must be reached to consider the take off complete

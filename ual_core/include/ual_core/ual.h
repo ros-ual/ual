@@ -55,6 +55,9 @@ public:
     /// Latest transform estimation of the robot
     Transform transform() const { return backend_->transform(); }
 
+    /// Latest pose estimation of the robot in geodesic coordinates
+    PoseGeo  globalPose() const { return backend_->globalPose(); }
+
     /// Current reference pose
     Pose    referencePose() const { return backend_->referencePose(); }
 
