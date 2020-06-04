@@ -64,7 +64,10 @@ public:
     /// Current robot state
     ual_core::State state() {
         ual_core::State output;
+        output.header.stamp = ros::Time::now();
         output.state = backend_->state();
+        output.flight_mode = backend_->flightMode();
+        output.battery = backend_->battery();
         return output;
     }
 

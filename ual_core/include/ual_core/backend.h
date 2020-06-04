@@ -34,6 +34,7 @@
 #include <geographic_msgs/GeoPoseStamped.h>
 #include <nav_msgs/Odometry.h>
 #include <ual_core/State.h>
+#include <sensor_msgs/BatteryState.h>
 #include <ros/ros.h>
 
 namespace ual {
@@ -85,6 +86,10 @@ public:
     virtual PoseGeo  globalPose() const { return PoseGeo(); }
     /// Current robot state
     inline State state() { return this->state_; }
+    /// Current autopilot custom flight mode
+    inline std::string flightMode() { return this->flight_mode_; }
+    /// Current battery state
+    inline sensor_msgs::BatteryState battery() { return this->battery_; }
     /// Current reference pose
     virtual Pose referencePose() = 0;
 
@@ -140,6 +145,8 @@ protected:
     std::thread spin_thread_;
 
     std::atomic<State> state_ = {ual_core::State::UNINITIALIZED};
+    std::string flight_mode_;
+    sensor_msgs::BatteryState battery_;
 };
 
 }	// namespace ual

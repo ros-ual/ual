@@ -8,7 +8,7 @@ prev_state.state = -1
 
 def state_callback(state):
     global prev_state
-    if state == prev_state:
+    if state.state == prev_state.state and state.flight_mode == prev_state.flight_mode:
         return
     prev_state = state
     if state.state == State.UNINITIALIZED:
@@ -25,6 +25,9 @@ def state_callback(state):
         state_as_string = "FLYING_MANUAL"
     elif state.state == State.LANDING:
         state_as_string = "LANDING"
+    
+    if state.flight_mode:
+        state_as_string += " / " + state.flight_mode
     rospy.loginfo(state_as_string)
 
 def main():
